@@ -1,0 +1,19 @@
+div.app-container {
+  max-width: 1140px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0px auto;
+  padding: 16px;
+
+  div.trigger-holder {
+    place-self: center;
+
+    div.button {
+      padding: 8px 24px;
+      background-color: #4285f4;
+      color: #fafafa;
+      cursor: pointer;
+      box-shadow: 1px 1px 3px 0.5px #020202d3;
+    }
+  }
+}

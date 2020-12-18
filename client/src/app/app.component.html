@@ -1,0 +1,13 @@
+<div class="app-container">
+  <div class="trigger-holder">
+    <div class="button"
+         (click)="fetchData()">
+      <span>Fetch Data</span>
+    </div>
+  </div>
+  <ng-container *ngIf="!!data.length">
+    <div class="result-holder">
+      <pre>{{ data }}</pre>
+    </div>
+  </ng-container>
+</div>
