@@ -7,6 +7,12 @@
 /server/tmp
 /client/out-tsc
 /server/out-tsc
+/client/public
+/server/public
+
+# Environments
+/server/src/environments/.env
+
 # Only exists if Bazel was run
 /bazel-out
 

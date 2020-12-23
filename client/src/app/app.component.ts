@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, throwError } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 
 type _AppData = {
@@ -31,10 +31,10 @@ type _AppData = {
 })
 export class AppComponent implements OnInit {
 
-  private _data$: BehaviorSubject<_AppData[]> = new BehaviorSubject<_AppData[]>([])
+  private _data$: BehaviorSubject<{ [key: string]: _AppData | null } | null> = new BehaviorSubject<{ [key: string]: _AppData | null } | null>(null)
   title = 'client';
 
-  data: _AppData[] = []
+  data: { [key: string]: _AppData } | null = null
 
   constructor(
     private _http: HttpClient
@@ -43,20 +43,22 @@ export class AppComponent implements OnInit {
   ngOnInit() { }
 
   fetchData(): void {
-    this._http.get<_AppData[]>('http://localhost:8080/fetchData').pipe(
+    this._http.get<{ [key: string]: _AppData | null } | null>('http://localhost:8080/fetch').pipe(
       tap(__ => {
         console.groupCollapsed('Data Receiving')
         console.log(__)
-        this._data$.next(__)
         console.groupEnd()
       }),
       catchError(__ => {
         console.groupCollapsed('[App Component] Data Fetch Failed')
         console.log(__)
         console.groupEnd()
-        return of(this._data$.getValue())
+        return throwError(this._data$.getValue())
       })
-    ).subscribe()
+    ).subscribe(
+      __ => { this._data$.next(__) },
+      __ => { this._data$.next({ "error": null }) }
+    )
   }
 
 }

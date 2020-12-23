@@ -1,47 +1,35 @@
-import express, { NextFunction, Request, Response } from 'express'
-
+import path from 'path'
+import http from 'http'
 import cors from 'cors'
-
 import dotenv from 'dotenv'
 
-import axios from 'axios'
+import { cleanEnv, port, str } from 'envalid'
 
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
+import { ApiController } from './modules/api/controllers/controller'
+import { MediaLabsApplication } from './app'
 
-import { from, of } from 'rxjs'
-import { catchError, tap } from 'rxjs/operators'
+dotenv.config({ path: path.resolve(process.cwd(), 'src', 'environments', '.env') })
 
-const app: express.Application = express()
-
-app.use(cors())
-
-dotenv.config()
-
-const PORT: string | number | undefined = process.env.SERVER_PORT || 8080
-
-app.get('/fetchData', (req: Request, res: Response, next: NextFunction) => {
-  const axiosConfig: AxiosRequestConfig = {
-    url: 'http://localhost:3000/_',
-    method: 'GET'
-  }
-  from(axios({ ...axiosConfig })).pipe(
-    tap((_: AxiosResponse) => {
-      console.groupCollapsed('[Express GET] Data Fetch Succues')
-      res.status(200).json({ ..._.data })
-      console.groupEnd()
-    }),
-    catchError((__: AxiosError) => {
-      console.groupCollapsed('[Express GET] Data Fetch Failed')
-      res.status(400)
-      console.groupEnd()
-      return of({ ...__ })
-    })
-  ).subscribe()
+cleanEnv(process.env, {
+  NODE_ENV: str(),
+  PORT: port()
 })
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Express with TypeScript and RxJS! Voila!')
+const PORT: string | number | undefined = process.env.PORT || 8080
+
+const CONTROLLERS: any[] = [
+  new ApiController()
+]
+
+const MIDDLEWARES: any[] = [
+  cors()
+]
+
+const APP: MediaLabsApplication = new MediaLabsApplication({
+  controllers: [...CONTROLLERS],
+  middlewares: [...MIDDLEWARES]
 })
 
+const SERVER: http.Server = new http.Server(APP.app)
 
-app.listen(PORT, () => { console.log(`Express on port : ${PORT}`) })
+SERVER.listen(+PORT, () => { console.log(`Application on port: ${PORT}`) })
