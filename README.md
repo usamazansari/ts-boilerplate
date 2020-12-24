@@ -58,6 +58,7 @@ The `Debug Express` configuration would start debugging within VS Code
 6. [TypeScript Express Tutorial](https://wanago.io/2018/12/03/typescript-express-tutorial-routing-controllers-middleware/)
 7. [Developing an Express Application Using TypeScript](https://dev.to/aligoren/developing-an-express-application-using-typescript-3b1)
 8. ~~[How to wrap Axios inside Rxjs with Typescript and React](https://medium.com/front-end-weekly/how-to-wrap-axios-inside-rxjs-with-typescript-and-react-6c21e47dcb63)~~ Used [`axios-observable`](https://www.npmjs.com/package/axios-observable)
+9. [How to build a backend app with TypeScript, Node.js, and Express](https://medium.com/javascript-in-plain-english/typescript-node-js-express-js-create-a-backend-application-f5110dbe5c19)
 
 ---
 

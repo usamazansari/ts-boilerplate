@@ -54,3 +54,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Debug outputs
+client/debug.log
+server/debug.log

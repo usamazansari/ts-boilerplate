@@ -1,4 +1,8 @@
-export interface AppData {
+export type JSONServerControllerPathType = {
+  data: string | null
+}
+
+export interface JSONServerDataModel {
   organization: {
     name: string
     employees: {

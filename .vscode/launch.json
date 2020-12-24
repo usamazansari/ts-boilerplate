@@ -28,7 +28,7 @@
       "name": "Debug Angular",
       "type": "chrome",
       "request": "launch",
-      "preLaunchTask": "npm: start",
+      "preLaunchTask": "Angular Serve",
       "url": "http://localhost:4200/",
       "cwd": "${workspaceFolder}/client",
       "webRoot": "${workspaceFolder}/client",
